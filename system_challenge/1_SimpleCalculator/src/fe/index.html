@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Calculator</title>
+    <script>
+      async function sendRequest(operation) {
+        const num1 = document.getElementById("num1").value;
+        const num2 = document.getElementById("num2").value;
+        const xhr = new XMLHttpRequest();
+        const ip = "localhost";
+        const port = "8080";
+        const url = `http://${ip}:${port}/calculate?num1=${num1}&num2=${num2}&operation=${operation}`;
+
+        try {
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
+          }
+
+          const json = await response.json();
+
+          console.log(json);
+          document.getElementById(
+            "result"
+          ).innerText = `Result: ${json.result}`;
+        } catch (error) {
+          console.error(error.message);
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Simple Calculator</h1>
+    <input type="number" id="num1" placeholder="Enter first number" />
+    <input type="number" id="num2" placeholder="Enter second number" />
+    <br /><br />
+    <button onclick="sendRequest('add')">Add</button>
+    <button onclick="sendRequest('subtract')">Subtract</button>
+    <button onclick="sendRequest('multiply')">Multiply</button>
+    <button onclick="sendRequest('divide')">Divide</button>
+    <br /><br />
+    <div id="result"></div>
+  </body>
+</html>
