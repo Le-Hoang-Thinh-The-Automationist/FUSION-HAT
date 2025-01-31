@@ -12,14 +12,7 @@ resource "aws_instance" "be_application_instance" {
   }
 
   user_data_replace_on_change = true
-  user_data                   = <<-EOF
-                #!/bin/bash
-                sudo yum update -y
-                sudo yum install httpd -y
-                sudo systemctl start httpd
-                sudo systemctl enable httpd
-                echo "<h1>Hello from Backend Application at $(hostname -f)</h1>" > /var/www/html/index.html
-                EOF
+  user_data                   = file("./script/be_app_script.sh")
 }
 
 resource "aws_instance" "fe_web_instance" {
@@ -36,12 +29,5 @@ resource "aws_instance" "fe_web_instance" {
   }
 
   user_data_replace_on_change = true
-  user_data                   = <<-EOF
-                #!/bin/bash
-                sudo yum update -y
-                sudo yum install httpd -y
-                sudo systemctl start httpd
-                sudo systemctl enable httpd
-                echo "<h1>Hello from Frontend Web at $(hostname -f)</h1>" > /var/www/html/index.html
-                EOF
+  user_data                   = file("./script/fe_web_script.sh")
 }

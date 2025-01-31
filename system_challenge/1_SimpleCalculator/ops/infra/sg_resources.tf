@@ -41,6 +41,7 @@ resource "aws_security_group" "private_be_application_sg" {
     to_port     = var.be_port
     protocol    = "tcp"
     cidr_blocks = [aws_vpc.vpc_system_challenge_1.cidr_block, "0.0.0.0/0"]
+    # security_groups = [aws_security_group.public_fe_web_sg.id]
   }
 
   ingress {

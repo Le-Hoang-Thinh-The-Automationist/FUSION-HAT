@@ -44,6 +44,21 @@ resource "aws_route_table" "rtb_system_challenge_1" {
   }
 }
 
+# Private Route table
+resource "aws_route_table" "private_rtb_system_challenge_1" {
+  vpc_id = aws_vpc.vpc_system_challenge_1.id
+
+  route {
+    cidr_block = aws_vpc.vpc_system_challenge_1.cidr_block
+    gateway_id = "local"
+  }
+
+  tags = {
+    Name    = "RTB"
+    Project = var.project_name
+  }
+}
+
 resource "aws_route" "public_route_to_igw" {
   route_table_id = aws_route_table.rtb_system_challenge_1.id
   gateway_id     = aws_internet_gateway.igw_system_challenge_1.id

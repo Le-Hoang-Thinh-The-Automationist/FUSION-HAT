@@ -36,6 +36,6 @@ variable "fe_port" {
 }
 
 variable "be_port" {
-  default = 8080
+  default = 80
   type    = number
 }
